@@ -42,3 +42,5 @@ module HometimeTest
     config.api_only = true
   end
 end
+
+Money.locale_backend = :i18n
