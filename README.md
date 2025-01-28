@@ -8,6 +8,7 @@ This project is a Ruby on Rails API application designed to handle and parse two
 - Validation and storage of payload data into the `Reservation`, `Pricing`, and `Guest` models.
 - Service to normalize payloads (easily extendable to support new payload formats).
 - Pricing model to store reservation pricing details (can be extended to include discounts, taxes, and other computations).
+- Phone numbers are normalized to the E.164 format, which includes the country code and ensures the number is properly formatted for Twilio integration.
 - Comprehensive unit and request specs to ensure application reliability.
 
 ## Requirements
