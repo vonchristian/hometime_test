@@ -12,7 +12,7 @@ RSpec.describe Guest, type: :model do
       record = build(:guest, email: 'test@test.com')
       record.save
 
-      expect(record.errors[:email]).to match_array('has already been takent')
+      expect(record.errors[:email]).to match_array('has already been taken')
     end
   end
 end
