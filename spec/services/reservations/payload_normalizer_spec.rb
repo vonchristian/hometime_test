@@ -37,7 +37,7 @@ RSpec.describe Reservations::PayloadNormalizer, type: :service do
     it { expect(result[:infants]).to eq(0) }
     it { expect(result[:status]).to eq('accepted') }
     it { expect(result[:pricing]).to eq({ currency: "AUD", payout_price_cents: 380000, security_price_cents: 50000, total_price_cents: 450000 }) }
-    it { expect(result[:guest]).to eq({ email: "wayne_woodbridge@bnb.com", first_name: "Wayne", last_name: "Woodbridge", phone: "639123456789" }) }
+    it { expect(result[:guest]).to eq({ email: "wayne_woodbridge@bnb.com", first_name: "Wayne", last_name: "Woodbridge", phone_numbers: [ "639123456789" ] }) }
   end
 
   context 'with payload #2 format' do
@@ -80,6 +80,6 @@ RSpec.describe Reservations::PayloadNormalizer, type: :service do
     it { expect(result[:infants]).to eq(0) }
     it { expect(result[:status]).to eq('accepted') }
     it { expect(result[:pricing]).to eq({ currency: "AUD", payout_price_cents: 380000, security_price_cents: 50000, total_price_cents: 450000 }) }
-    it { expect(result[:guest]).to eq({ email: "wayne_woodbridge@bnb.com", first_name: "Wayne", last_name: "Woodbridge", phone: "639123456789" }) }
+    it { expect(result[:guest]).to eq({ email: "wayne_woodbridge@bnb.com", first_name: "Wayne", last_name: "Woodbridge", phone_numbers: [ "639123456789", "639123456789" ] }) }
   end
 end

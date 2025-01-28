@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_27_225626) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_28_074318) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -18,10 +18,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_225626) do
     t.string "email", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.string "phone", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_guests_on_email", unique: true
+  end
+
+  create_table "phone_numbers", force: :cascade do |t|
+    t.bigint "guest_id", null: false
+    t.string "number"
+    t.string "phone_type", default: "primary", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["guest_id"], name: "index_phone_numbers_on_guest_id"
   end
 
   create_table "reservation_pricings", force: :cascade do |t|
@@ -50,6 +58,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_225626) do
     t.index ["guest_id"], name: "index_reservations_on_guest_id"
   end
 
+  add_foreign_key "phone_numbers", "guests"
   add_foreign_key "reservation_pricings", "reservations"
   add_foreign_key "reservations", "guests"
 end

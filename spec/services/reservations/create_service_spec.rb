@@ -7,7 +7,7 @@ RSpec.describe Reservations::CreateService, type: :service do
         email: '1guest@example.com',
         first_name: 'John',
         last_name: 'Doe',
-        phone: '1234567890'
+        phone_numbers: [ '1234567890' ]
       }
     end
 
@@ -39,6 +39,7 @@ RSpec.describe Reservations::CreateService, type: :service do
       let(:guest) { Guest.find_by(email: guest_params[:email]) }
       let(:reservation) { guest.reservations.last }
       let(:pricing) { reservation.pricing }
+      let(:phone_number) { guest.phone_numbers.last }
 
       it 'creates a guest, reservation and pricing' do
         expect {
@@ -46,6 +47,7 @@ RSpec.describe Reservations::CreateService, type: :service do
         }.to change(Guest, :count).by(1)
           .and change(Reservation, :count).by(1)
           .and change(Reservations::Pricing, :count).by(1)
+          .and change(Guests::PhoneNumber, :count).by(1)
       end
 
       context 'when checking attrs are correct' do
@@ -54,7 +56,6 @@ RSpec.describe Reservations::CreateService, type: :service do
         describe 'assigns correct guest details' do
           it { expect(guest.first_name).to eq(guest_params[:first_name]) }
           it { expect(guest.last_name).to eq(guest_params[:last_name]) }
-          it { expect(guest.phone).to eq(guest_params[:phone]) }
         end
 
         describe 'assigns correct reservation details' do
@@ -74,10 +75,15 @@ RSpec.describe Reservations::CreateService, type: :service do
           it { expect(pricing.security_price_cents).to eq(pricing_params[:security_price_cents]) }
           it { expect(pricing.total_price_cents).to eq(pricing_params[:total_price_cents]) }
         end
+
+        describe 'assigns correct phone number details' do
+          it { expect(phone_number.number).to eq('+1234567890') }
+          it { expect(phone_number.phone_type).to eq('primary') }
+        end
       end
 
       it 'does not create a duplicate guest if one already exists' do
-        Guest.create!(guest_params)
+        Guest.create!(email: guest_params[:email], first_name: guest_params[:first_name], last_name: guest_params[:last_name])
 
         expect {
           described_class.run!(valid_params)

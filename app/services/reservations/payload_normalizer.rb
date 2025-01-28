@@ -62,7 +62,7 @@ class Reservations::PayloadNormalizer < ActiveInteraction::Base
       email: data[:guest_email] || data.dig(:guest, :email),
       first_name: data[:guest_first_name] || data.dig(:guest, :first_name),
       last_name: data[:guest_last_name] || data.dig(:guest, :last_name),
-      phone: (data[:guest_phone_numbers]&.first || data.dig(:guest, :phone))
+      phone_numbers: (data[:guest_phone_numbers] || [ data.dig(:guest, :phone) ])
     }
   end
 end
