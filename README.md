@@ -1,4 +1,4 @@
-# Hometine API Project
+# Hometime API Project
 
 This project is a Ruby on Rails API application designed to handle and parse two distinct payload formats. The parsed data is saved to a `Reservation` model that belongs to a `Guest` model, ensuring that the `email` field for `Guest` is unique.
 
