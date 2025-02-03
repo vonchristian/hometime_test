@@ -54,5 +54,5 @@ group :test do
 end
 gem "money-rails"
 gem "faker"
-gem "active_interaction", "~> 5.4"
+gem "active_interaction", "~> 5.5"
 gem "phonelib"
